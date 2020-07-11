@@ -9,7 +9,7 @@
 
         <variable
             name="viewModel"
-            type="com.divergent.mvvmsample.ui.main.MainViewModel" />
+            type="com.sharma.mvvmsample.ui.main.MainViewModel" />
 
     </data>
 

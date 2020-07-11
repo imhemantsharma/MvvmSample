@@ -7,7 +7,7 @@ tools:context=".ui.splash.SplashActivity">
 
     <variable
         name="viewModel"
-        type="com.divergent.mvvmsample.ui.splash.SplashViewModel" />
+        type="com.sharma.mvvmsample.ui.splash.SplashViewModel" />
 
 </data>
 
