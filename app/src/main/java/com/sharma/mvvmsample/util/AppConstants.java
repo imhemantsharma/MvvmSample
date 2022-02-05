@@ -21,8 +21,8 @@ public final class AppConstants {
     public final static int MY_PERMISSIONS_REQUEST_LOCATION = 101;
     public final static int MY_PERMISSIONS_REQUEST_CAMERA = 102;
 
-    public static String CONTENT_TYPE_TEXT="text/plain";
-    public static String CONTENT_TYPE_JSON="application/json; charset=utf-8";
+    public static String CONTENT_TYPE_TEXT = "text/plain";
+    public static String CONTENT_TYPE_JSON = "application/json; charset=utf-8";
 
     private AppConstants() {
         // This class is not publicly instantiable

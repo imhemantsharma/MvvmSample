@@ -1,8 +1,8 @@
 package com.sharma.mvvmsample.data.remote;
 
+import com.sharma.mvvmsample.data.model.api.UserInfo;
 
-import com.sharma.mvvmsample.data.model.api.BlogWrapper;
-
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
@@ -15,23 +15,22 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * Date: 10/4/18.
  */
 
-public final class AppApiHelper implements ApiHelper
-{
+public final class AppApiHelper implements ApiHelper {
 
+    private static final OkHttpClient okHttpClient = new OkHttpClient.Builder()
+            .connectTimeout(1, TimeUnit.MINUTES)
+            .readTimeout(30, TimeUnit.SECONDS)
+            .writeTimeout(15, TimeUnit.SECONDS)
+            .build();
     private static ApiHelper apiInterface = null;
     private static AppApiHelper apiHelper;
+
     public synchronized static AppApiHelper getAppApiInstance() {
         if (apiHelper == null) {
             apiHelper = new AppApiHelper();
         }
         return apiHelper;
     }
-
-    private static OkHttpClient okHttpClient = new OkHttpClient.Builder()
-            .connectTimeout(1, TimeUnit.MINUTES)
-            .readTimeout(30, TimeUnit.SECONDS)
-            .writeTimeout(15, TimeUnit.SECONDS)
-            .build();
 
     private static ApiHelper getApiInterface() {
         if (apiInterface == null) {
@@ -46,7 +45,7 @@ public final class AppApiHelper implements ApiHelper
     }
 
     @Override
-    public Call<BlogWrapper> getPopularBlog() {
-        return getApiInterface().getPopularBlog();
+    public Call<List<UserInfo>> getUsers() {
+        return getApiInterface().getUsers();
     }
 }

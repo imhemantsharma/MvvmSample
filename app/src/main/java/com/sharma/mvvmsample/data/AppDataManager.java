@@ -8,10 +8,12 @@ import com.google.gson.GsonBuilder;
 import com.sharma.mvvmsample.data.local.db.AppDBHelper;
 import com.sharma.mvvmsample.data.local.prefs.AppPreferencesHelper;
 import com.sharma.mvvmsample.data.local.prefs.PreferencesHelper;
-import com.sharma.mvvmsample.data.model.api.BlogWrapper;
+import com.sharma.mvvmsample.data.model.api.UserInfo;
 import com.sharma.mvvmsample.data.model.db.DaoSession;
 import com.sharma.mvvmsample.data.remote.ApiHelper;
 import com.sharma.mvvmsample.data.remote.AppApiHelper;
+
+import java.util.List;
 
 import retrofit2.Call;
 
@@ -21,7 +23,6 @@ import retrofit2.Call;
  * Date: 10/4/18.
  */
 
-
 public final class AppDataManager implements DataManager {
 
     private static AppDataManager instance;
@@ -29,7 +30,6 @@ public final class AppDataManager implements DataManager {
     private final ApiHelper mApiHelper;
     private final PreferencesHelper mPreferencesHelper;
     private final AppDBHelper appDBHelper;
-
 
     private AppDataManager(Context context) {
         mPreferencesHelper = new AppPreferencesHelper(context);
@@ -71,7 +71,7 @@ public final class AppDataManager implements DataManager {
     }
 
     @Override
-    public Call<BlogWrapper> getPopularBlog() {
-        return mApiHelper.getPopularBlog();
+    public Call<List<UserInfo>> getUsers() {
+        return mApiHelper.getUsers();
     }
 }

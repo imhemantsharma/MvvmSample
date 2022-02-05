@@ -8,9 +8,9 @@ package com.sharma.mvvmsample.data.remote;
 
 final class Webservices {
 
+    static final String BASE_URL = "https://jsonplaceholder.typicode.com/";
+
     private Webservices() {
         // This class is not publicly instantiable
     }
-
-    static final String BASE_URL = "https://api.myjson.com/";
 }

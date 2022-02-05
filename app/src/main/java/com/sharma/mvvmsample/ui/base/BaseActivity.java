@@ -72,7 +72,6 @@ public abstract class BaseActivity<T extends ViewDataBinding, V extends BaseView
 
     }
 
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -167,9 +166,7 @@ public abstract class BaseActivity<T extends ViewDataBinding, V extends BaseView
             String fragmentName = fragment.getClass().getName();
 
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                getWindow().setEnterTransition(null);
-            }
+            getWindow().setEnterTransition(null);
             fragmentTransaction.add(layoutId, fragment, fragmentName);
             if (addToBackStack) fragmentTransaction.addToBackStack(fragmentName);
             fragmentTransaction.commit();
@@ -194,13 +191,15 @@ public abstract class BaseActivity<T extends ViewDataBinding, V extends BaseView
 
     @Override
     public void handleApiFailure(@NonNull Throwable t) {
-        //do api handle staff
+        hideLoading();
+        //do api handle stuff
         showToast(t.toString());
     }
 
     @Override
     public void handleApiError(ResponseBody response) {
-        //do api handle staff
+        //do api handle stuff
+        hideLoading();
     }
 }
 

@@ -1,6 +1,8 @@
 package com.sharma.mvvmsample.data.remote;
 
-import com.sharma.mvvmsample.data.model.api.BlogWrapper;
+import com.sharma.mvvmsample.data.model.api.UserInfo;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -12,7 +14,7 @@ import retrofit2.http.GET;
  */
 
 public interface ApiHelper {
-    //@GET("feed.json")
-    @GET("bins/oke2y")
-    Call<BlogWrapper> getPopularBlog();
+
+    @GET("users")
+    Call<List<UserInfo>> getUsers();
 }

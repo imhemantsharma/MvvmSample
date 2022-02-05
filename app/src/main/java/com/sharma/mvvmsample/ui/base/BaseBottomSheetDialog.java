@@ -25,7 +25,6 @@ import com.sharma.mvvmsample.R;
 
 import okhttp3.ResponseBody;
 
-
 /**
  * Created by Hemant Sharma on 24-02-20.
  */

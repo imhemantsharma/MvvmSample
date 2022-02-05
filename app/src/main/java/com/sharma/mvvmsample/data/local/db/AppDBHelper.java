@@ -9,11 +9,10 @@ import org.greenrobot.greendao.database.Database;
 
 /**
  * Created by Hemant Sharma on 08-10-19.
- * Divergent software labs pvt. ltd
  */
 public class AppDBHelper implements DBHelper {
     private static AppDBHelper ourInstance;
-    private DaoSession daoSession;
+    private final DaoSession daoSession;
 
     private AppDBHelper(Context context) {
         // regular SQLite database

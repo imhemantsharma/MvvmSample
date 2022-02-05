@@ -1,5 +1,3 @@
-
-
 package com.sharma.mvvmsample.ui.base;
 
 import androidx.databinding.ObservableBoolean;

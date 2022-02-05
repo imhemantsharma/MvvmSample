@@ -153,7 +153,7 @@ public final class AppUtils {
                 MultipartBody.FORM, data);
     }
 
-    public static RequestBody createBody(String bodyContent, String data){
+    public static RequestBody createBody(String bodyContent, String data) {
         return RequestBody.create(MediaType.parse(bodyContent), data);
     }
 

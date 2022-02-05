@@ -1,5 +1,6 @@
 package com.sharma.mvvmsample.ui.main;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -13,15 +14,19 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.sharma.mvvmsample.BR;
 import com.sharma.mvvmsample.R;
 import com.sharma.mvvmsample.ViewModelProviderFactory;
-import com.sharma.mvvmsample.data.model.api.Blog;
+import com.sharma.mvvmsample.data.model.api.UserInfo;
 import com.sharma.mvvmsample.databinding.ActivityMainBinding;
 import com.sharma.mvvmsample.ui.base.BaseActivity;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewModel> {
+public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewModel> implements MainNavigator {
 
-    public static Intent newIntent(Context context){
+    private final List<UserInfo> userList = new ArrayList<>();
+    private UserInfoAdapter userInfoAdapter;
+
+    public static Intent newIntent(Context context) {
         return new Intent(context, MainActivity.class);
     }
 
@@ -37,35 +42,58 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
 
     @Override
     public MainViewModel getViewModel() {
-        return new ViewModelProvider(this, ViewModelProviderFactory.getInstance()).get(MainViewModel.class);
+        return new ViewModelProvider(this, ViewModelProviderFactory.getVMInstance()).get(MainViewModel.class);
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getPopularBlog();
-        getViewDataBinding().swiperefresh.setOnRefreshListener(this::getPopularBlog);
-    }
+        getViewModel().setNavigator(this);
 
-    public void getPopularBlog() {
-        getViewDataBinding().swiperefresh.setRefreshing(true);
-        getViewModel().getAllBlog().observe(this, blogList -> {
-            getViewDataBinding().swiperefresh.setRefreshing(false);
-            prepareRecyclerView(blogList);
+        // initial setup
+        init();
+
+        // fetching user info
+        fetchUserInfo();
+
+        // Refresh the list items
+        getViewDataBinding().swiperefresh.setOnRefreshListener(() -> {
+            userList.clear();
+            fetchUserInfo();
         });
     }
 
-
-    private void prepareRecyclerView(List<Blog> blogList) {
-        BlogAdapter mBlogAdapter = new BlogAdapter(blogList);
+    @SuppressLint("NotifyDataSetChanged")
+    private void init() {
         if (this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-            getViewDataBinding().blogRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+            getViewDataBinding().recyclerView.setLayoutManager(new LinearLayoutManager(this));
         } else {
-            getViewDataBinding().blogRecyclerView.setLayoutManager(new GridLayoutManager(this, 4));
+            getViewDataBinding().recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
         }
-        getViewDataBinding().blogRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        getViewDataBinding().blogRecyclerView.setAdapter(mBlogAdapter);
-        mBlogAdapter.notifyDataSetChanged();
+        getViewDataBinding().recyclerView.setItemAnimator(new DefaultItemAnimator());
+
+        userInfoAdapter = new UserInfoAdapter(userList);
+        userInfoAdapter.setHasStableIds(true);
+        getViewDataBinding().recyclerView.setAdapter(userInfoAdapter);
+
+        // User info observer call whenever data received from server
+        getViewModel().getAllUserLiveData().observe(this, list -> {
+            getViewDataBinding().swiperefresh.setRefreshing(false);
+            int initialPos = userList.size();
+            userList.addAll(list);
+            if (userInfoAdapter != null) {
+                // if the list size is 0 then notify the all list item otherwise notify the only inserted item
+                if (initialPos == 0) {
+                    userInfoAdapter.notifyDataSetChanged();
+                } else {
+                    userInfoAdapter.notifyItemRangeInserted(initialPos, list.size());
+                }
+            }
+        });
     }
 
+    private void fetchUserInfo() {
+        getViewDataBinding().swiperefresh.setRefreshing(true);
+        getViewModel().getAllUserInfo();
+    }
 }
