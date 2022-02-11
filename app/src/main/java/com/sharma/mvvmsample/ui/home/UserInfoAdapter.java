@@ -1,4 +1,4 @@
-package com.sharma.mvvmsample.ui.main;
+package com.sharma.mvvmsample.ui.home;
 
 import android.view.LayoutInflater;
 import android.view.View;

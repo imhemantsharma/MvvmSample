@@ -81,6 +81,7 @@ public abstract class BaseFragment<T extends ViewDataBinding, V extends BaseView
 
     @Override
     public void onDetach() {
+        mViewDataBinding = null;
         mActivity = null;
         super.onDetach();
     }

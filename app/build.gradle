@@ -1,14 +1,18 @@
-apply plugin: 'com.android.application'
-apply plugin: 'org.greenrobot.greendao'
+plugins {
+    id 'com.android.application'
+    id 'org.greenrobot.greendao'
+}
 
 android {
-    compileSdkVersion 31
+    compileSdk 31
+
     defaultConfig {
         applicationId "com.sharma.mvvmsample"
-        minSdkVersion 21
-        targetSdkVersion 31
+        minSdk 21
+        targetSdk 31
         versionCode 1
         versionName "1.0"
+
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
     }
@@ -18,24 +22,22 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-
-    dataBinding {
-        enabled = true
+    buildFeatures {
+        dataBinding true
     }
 }
 
+// GreenDao DB Version
 greendao {
     schemaVersion 1
 }
 
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     // android support libraries
     implementation "androidx.appcompat:appcompat:$rootProject.supportLibraryVersion"
@@ -64,12 +66,11 @@ dependencies {
     implementation "com.google.code.gson:gson:$rootProject.gsonVersion"
 
     // ViewModel
-    implementation "androidx.lifecycle:lifecycle-viewmodel:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion"
     // LiveData
-    implementation "androidx.lifecycle:lifecycle-livedata:$lifecycle_version"
-    // Saved state module for ViewModel
-    implementation "androidx.lifecycle:lifecycle-viewmodel-savedstate:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion"
 
-    // alternately - if using Java8, use the following instead of lifecycle-compiler
-    implementation "androidx.lifecycle:lifecycle-common-java8:$lifecycle_version"
+    // Navigation
+    implementation "androidx.navigation:navigation-fragment:$navigationVersion"
+    implementation "androidx.navigation:navigation-ui:$navigationVersion"
 }

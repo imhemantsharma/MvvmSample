@@ -14,8 +14,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+
         <activity
-            android:name="com.sharma.mvvmsample.ui.splash.SplashActivity"
+            android:name="com.sharma.mvvmsample.ui.main.MainActivity"
             android:exported="true">
 
             <intent-filter>
@@ -24,10 +25,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name="com.sharma.mvvmsample.ui.main.MainActivity"
-            android:exported="false"
-            android:launchMode="singleTop" />
     </application>
 
 </manifest>
